@@ -31,6 +31,11 @@ jobs:
     - name: Run tests
       run: |
         pytest test_app.py
+
+  build-and-push-image:
+    needs: build-and-test  # 위 테스트가 성공해야만 실행됨!
+    if: startsWith(github.ref, 'refs/tags/v') # 'v'로 시작하는 태그일 때만 실행!
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
